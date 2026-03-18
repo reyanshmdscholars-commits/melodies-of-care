@@ -215,7 +215,7 @@ export default function ProfilePage() {
                     <div key={e.id} className="flex items-center justify-between gap-3 p-3 rounded-xl" style={{ background: 'rgba(178,216,216,0.1)', border: '1px solid rgba(178,216,216,0.25)' }}>
                       <div>
                         <p style={{ fontWeight: 600, fontSize: '0.88rem' }}>{e.facility_name}</p>
-                        <p style={{ fontSize: '0.76rem', color: 'rgba(26,54,93,0.5)' }}>{new Date(e.date).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })} · {e.time} · {e.instrument_required}</p>
+                        <p style={{ fontSize: '0.76rem', color: 'rgba(26,54,93,0.5)' }}>{new Date(e.date).toLocaleDateString('en-US', { weekday: 'short', month: 'short', day: 'numeric' })} · {e.time}</p>
                       </div>
                       <span className="badge-open" style={{ fontSize: '0.68rem', flexShrink: 0 }}>Upcoming</span>
                     </div>
