@@ -34,7 +34,7 @@ function StatCard({ icon, value, label, delay }: {
     return () => observer.disconnect()
   }, [])
   return (
-    <div ref={ref} className="glass-card p-8 text-center"
+    <div ref={ref} className="glass-card p-6 sm:p-8 text-center"
       style={{ opacity: visible ? 1 : 0, transform: visible ? 'translateY(0)' : 'translateY(28px)', transition: `all 0.75s cubic-bezier(0.34,1.56,0.64,1) ${delay}ms` }}>
       <div className="w-14 h-14 rounded-2xl flex items-center justify-center mx-auto mb-5"
         style={{ background: 'rgba(178,216,216,0.2)', border: '1px solid rgba(178,216,216,0.4)' }}>
@@ -137,8 +137,8 @@ export default function Home() {
               </div>
             </div>
 
-            {/* Right: logo feature card */}
-            <div className="flex items-center justify-center">
+            {/* Right: logo feature card — hidden on mobile to keep hero clean */}
+            <div className="hidden lg:flex items-center justify-center">
               <div className="relative mx-8 sm:mx-10">
                 {/* Outer glow ring */}
                 <div style={{ position: 'absolute', inset: -20, borderRadius: '50%', background: 'radial-gradient(ellipse, rgba(178,216,216,0.3) 0%, transparent 70%)', pointerEvents: 'none' }} />
@@ -217,7 +217,7 @@ export default function Home() {
 
       {/* ── JOIN CTA ──────────────────────────────────────────── */}
       <section id="volunteer" className="max-w-6xl mx-auto px-4 sm:px-6 pb-28">
-        <div className="glass-card p-10 md:p-16 text-center"
+        <div className="glass-card p-7 sm:p-10 md:p-16 text-center"
           style={{ background: 'linear-gradient(135deg, rgba(26,54,93,0.03) 0%, rgba(240,147,91,0.07) 100%)', border: '1px solid rgba(240,147,91,0.15)' }}>
           <div className="w-20 h-20 rounded-3xl overflow-hidden flex items-center justify-center mx-auto mb-6"
             style={{ background: 'rgba(240,147,91,0.1)', border: '1.5px solid rgba(240,147,91,0.22)', boxShadow: '0 4px 20px rgba(240,147,91,0.2)' }}>

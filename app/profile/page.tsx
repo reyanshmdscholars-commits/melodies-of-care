@@ -166,14 +166,14 @@ export default function ProfilePage() {
               <h3 style={{ fontWeight: 700, fontSize: '0.95rem', marginBottom: '1.1rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
                 <Award size={15} color="var(--coral)" /> Milestones
               </h3>
-              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-around', gap: '4px', marginBottom: '1rem', flexWrap: 'nowrap', overflow: 'hidden' }}>
                 {MILESTONES.map(m => {
                   const earned = volunteer.hours >= m.hours
                   return (
-                    <div key={m.hours} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px', opacity: earned ? 1 : 0.25, transition: 'opacity 0.4s' }}>
-                      <div style={{ fontSize: '1.5rem', filter: earned ? 'none' : 'grayscale(1)' }}>{m.emoji}</div>
-                      <div style={{ fontSize: '0.58rem', fontWeight: 700, color: 'var(--navy)', textAlign: 'center', lineHeight: 1.2 }}>{m.label}</div>
-                      <div style={{ fontSize: '0.55rem', color: 'rgba(26,54,93,0.42)' }}>{m.hours}h</div>
+                    <div key={m.hours} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '2px', opacity: earned ? 1 : 0.25, transition: 'opacity 0.4s', minWidth: 0, flex: 1 }}>
+                      <div style={{ fontSize: '1.3rem', filter: earned ? 'none' : 'grayscale(1)' }}>{m.emoji}</div>
+                      <div style={{ fontSize: '0.55rem', fontWeight: 700, color: 'var(--navy)', textAlign: 'center', lineHeight: 1.2, whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis', width: '100%' }}>{m.label}</div>
+                      <div style={{ fontSize: '0.52rem', color: 'rgba(26,54,93,0.42)' }}>{m.hours}h</div>
                     </div>
                   )
                 })}

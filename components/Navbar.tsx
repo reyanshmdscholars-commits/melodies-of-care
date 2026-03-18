@@ -38,19 +38,19 @@ export default function Navbar() {
       className="glass-nav fixed top-0 inset-x-0 z-50 transition-all duration-300"
       style={{ opacity: scrolled ? 1 : 0.97 }}
     >
-      <div className="max-w-7xl mx-auto px-6 flex items-center justify-between h-[68px]">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 flex items-center justify-between h-[68px]">
 
         {/* Logo */}
-        <Link href="/" className="flex items-center gap-3 group flex-shrink-0">
-          <div className="w-10 h-10 rounded-xl overflow-hidden flex items-center justify-center transition-transform duration-300 group-hover:scale-105"
+        <Link href="/" className="flex items-center gap-2.5 group flex-shrink-0 min-w-0">
+          <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl overflow-hidden flex-shrink-0 flex items-center justify-center transition-transform duration-300 group-hover:scale-105"
             style={{ background: 'rgba(178,216,216,0.12)', border: '1px solid rgba(178,216,216,0.3)' }}>
             <Image src="/logo.png" alt="Melodies of Care" width={34} height={34} priority />
           </div>
-          <div className="flex flex-col leading-none">
-            <span style={{ color: 'var(--navy)', fontWeight: 800, fontSize: '0.95rem', letterSpacing: '-0.01em', fontFamily: 'var(--font-heading), Georgia, serif' }}>
+          <div className="flex flex-col leading-none min-w-0">
+            <span className="truncate" style={{ color: 'var(--navy)', fontWeight: 800, fontSize: '0.88rem', letterSpacing: '-0.01em', fontFamily: 'var(--font-heading), Georgia, serif' }}>
               Melodies of Care
             </span>
-            <span style={{ color: 'rgba(26,54,93,0.42)', fontSize: '0.6rem', letterSpacing: '0.12em', textTransform: 'uppercase', fontWeight: 600, marginTop: '2px' }}>
+            <span className="hidden sm:block" style={{ color: 'rgba(26,54,93,0.42)', fontSize: '0.6rem', letterSpacing: '0.12em', textTransform: 'uppercase', fontWeight: 600, marginTop: '2px' }}>
               Music Outreach
             </span>
           </div>

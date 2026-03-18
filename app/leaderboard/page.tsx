@@ -36,7 +36,7 @@ export default function LeaderboardPage() {
 
   return (
     <div style={{ paddingTop: '5rem', minHeight: '100vh' }}>
-      <div className="max-w-3xl mx-auto px-6 py-16">
+      <div className="max-w-3xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
 
         {/* Header */}
         <div className="text-center mb-14">
@@ -70,16 +70,16 @@ export default function LeaderboardPage() {
           <>
             {/* Podium — top 3 */}
             {top3.length > 0 && (
-              <div className="flex items-end justify-center gap-4 mb-10" style={{ minHeight: 200 }}>
+              <div className="flex items-end justify-center gap-2 sm:gap-4 mb-10" style={{ minHeight: 180 }}>
                 {/* 2nd place */}
                 {top3[1] && (
                   <div className="flex flex-col items-center" style={{ order: 1 }}>
                     <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>🥈</div>
-                    <div className="glass-card p-5 text-center" style={{ minWidth: 130, border: `1.5px solid rgba(192,192,192,0.4)`, background: medalBg[1] }}>
-                      <div style={{ fontSize: '0.65rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#888', marginBottom: '0.3rem' }}>2nd</div>
-                      <div style={{ fontWeight: 800, fontSize: '0.95rem', color: 'var(--navy)', marginBottom: '0.2rem', lineHeight: 1.2 }}>{top3[1].name}</div>
-                      <div style={{ fontSize: '0.75rem', color: 'rgba(26,54,93,0.5)', marginBottom: '0.6rem' }}>{top3[1].instrument}</div>
-                      <div style={{ fontWeight: 800, fontSize: '1.4rem', color: '#888' }}>{top3[1].hours}h</div>
+                    <div className="glass-card p-4 sm:p-5 text-center" style={{ width: 'clamp(90px, 28vw, 130px)', border: `1.5px solid rgba(192,192,192,0.4)`, background: medalBg[1] }}>
+                      <div style={{ fontSize: '0.6rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#888', marginBottom: '0.3rem' }}>2nd</div>
+                      <div style={{ fontWeight: 800, fontSize: '0.85rem', color: 'var(--navy)', marginBottom: '0.2rem', lineHeight: 1.2, wordBreak: 'break-word' }}>{top3[1].name}</div>
+                      <div style={{ fontSize: '0.7rem', color: 'rgba(26,54,93,0.5)', marginBottom: '0.5rem' }}>{top3[1].instrument}</div>
+                      <div style={{ fontWeight: 800, fontSize: '1.2rem', color: '#888' }}>{top3[1].hours}h</div>
                     </div>
                     <div style={{ width: 4, height: 60, background: 'linear-gradient(to bottom, #C0C0C0, transparent)', borderRadius: 2 }} />
                   </div>
@@ -89,11 +89,11 @@ export default function LeaderboardPage() {
                 {top3[0] && (
                   <div className="flex flex-col items-center" style={{ order: 0 }}>
                     <div style={{ fontSize: '2rem', marginBottom: '0.5rem', filter: 'drop-shadow(0 2px 4px rgba(200,150,0,0.5))' }}>👑</div>
-                    <div className="glass-card p-6 text-center" style={{ minWidth: 150, border: `2px solid rgba(255,215,0,0.5)`, background: medalBg[0], boxShadow: '0 8px 32px rgba(255,215,0,0.18)' }}>
-                      <div style={{ fontSize: '0.65rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#c8960c', marginBottom: '0.3rem' }}>1st Place</div>
-                      <div style={{ fontWeight: 800, fontSize: '1.05rem', color: 'var(--navy)', marginBottom: '0.2rem', lineHeight: 1.2 }}>{top3[0].name}</div>
-                      <div style={{ fontSize: '0.78rem', color: 'rgba(26,54,93,0.5)', marginBottom: '0.75rem' }}>{top3[0].instrument}</div>
-                      <div style={{ fontWeight: 800, fontSize: '1.8rem', color: '#c8960c' }}>{top3[0].hours}h</div>
+                    <div className="glass-card p-4 sm:p-6 text-center" style={{ width: 'clamp(100px, 32vw, 150px)', border: `2px solid rgba(255,215,0,0.5)`, background: medalBg[0], boxShadow: '0 8px 32px rgba(255,215,0,0.18)' }}>
+                      <div style={{ fontSize: '0.6rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#c8960c', marginBottom: '0.3rem' }}>1st Place</div>
+                      <div style={{ fontWeight: 800, fontSize: '0.95rem', color: 'var(--navy)', marginBottom: '0.2rem', lineHeight: 1.2, wordBreak: 'break-word' }}>{top3[0].name}</div>
+                      <div style={{ fontSize: '0.75rem', color: 'rgba(26,54,93,0.5)', marginBottom: '0.6rem' }}>{top3[0].instrument}</div>
+                      <div style={{ fontWeight: 800, fontSize: '1.5rem', color: '#c8960c' }}>{top3[0].hours}h</div>
                     </div>
                     <div style={{ width: 4, height: 80, background: 'linear-gradient(to bottom, #FFD700, transparent)', borderRadius: 2 }} />
                   </div>
@@ -103,11 +103,11 @@ export default function LeaderboardPage() {
                 {top3[2] && (
                   <div className="flex flex-col items-center" style={{ order: 2 }}>
                     <div style={{ fontSize: '1.5rem', marginBottom: '0.5rem' }}>🥉</div>
-                    <div className="glass-card p-5 text-center" style={{ minWidth: 130, border: `1.5px solid rgba(205,127,50,0.4)`, background: medalBg[2] }}>
-                      <div style={{ fontSize: '0.65rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.1em', color: '#9a6030', marginBottom: '0.3rem' }}>3rd</div>
-                      <div style={{ fontWeight: 800, fontSize: '0.95rem', color: 'var(--navy)', marginBottom: '0.2rem', lineHeight: 1.2 }}>{top3[2].name}</div>
-                      <div style={{ fontSize: '0.75rem', color: 'rgba(26,54,93,0.5)', marginBottom: '0.6rem' }}>{top3[2].instrument}</div>
-                      <div style={{ fontWeight: 800, fontSize: '1.4rem', color: '#9a6030' }}>{top3[2].hours}h</div>
+                    <div className="glass-card p-4 sm:p-5 text-center" style={{ width: 'clamp(90px, 28vw, 130px)', border: `1.5px solid rgba(205,127,50,0.4)`, background: medalBg[2] }}>
+                      <div style={{ fontSize: '0.6rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.08em', color: '#9a6030', marginBottom: '0.3rem' }}>3rd</div>
+                      <div style={{ fontWeight: 800, fontSize: '0.85rem', color: 'var(--navy)', marginBottom: '0.2rem', lineHeight: 1.2, wordBreak: 'break-word' }}>{top3[2].name}</div>
+                      <div style={{ fontSize: '0.7rem', color: 'rgba(26,54,93,0.5)', marginBottom: '0.5rem' }}>{top3[2].instrument}</div>
+                      <div style={{ fontWeight: 800, fontSize: '1.2rem', color: '#9a6030' }}>{top3[2].hours}h</div>
                     </div>
                     <div style={{ width: 4, height: 44, background: 'linear-gradient(to bottom, #CD7F32, transparent)', borderRadius: 2 }} />
                   </div>

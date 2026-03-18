@@ -210,6 +210,7 @@ p, span, label, input, textarea, select, button, a {
 @media (max-width: 480px) { .masonry-grid { columns: 1; } }
 
 /* ── Mobile / tablet responsive overrides ────────────────── */
+
 /* Tables: allow horizontal scroll inside cards */
 .table-scroll {
   overflow-x: auto;
@@ -218,20 +219,36 @@ p, span, label, input, textarea, select, button, a {
 .table-scroll .glass-table {
   min-width: 580px;
 }
+/* Hide the scrollbar track but keep it functional */
+.table-scroll::-webkit-scrollbar { height: 4px; }
+.table-scroll::-webkit-scrollbar-thumb { background: rgba(26,54,93,0.15); border-radius: 2px; }
 
-/* Tighten table cell padding on small screens */
+/* ── Tablet (≤ 768px) ──────────────────────────────────────── */
+@media (max-width: 768px) {
+  /* Reduce large glass-card inner padding */
+  .glass-card { border-radius: 16px; }
+}
+
+/* ── Phone (≤ 640px) ───────────────────────────────────────── */
 @media (max-width: 640px) {
+  /* Table cells: tighter padding */
   .glass-table th { padding: 6px 10px; }
-  .glass-table td { padding: 11px 10px; }
+  .glass-table td { padding: 10px 10px; font-size: 0.82rem; }
 
-  /* Reduce section padding */
-  .section-px { padding-left: 1rem; padding-right: 1rem; }
+  /* Stat cards: reduce number font size */
+  .stat-number { font-size: 2.2rem !important; }
+
+  /* Reduce hero heading on phones */
+  h1 { line-height: 1.15; }
 }
 
 /* Hide decorative floating chips on very small screens */
 @media (max-width: 480px) {
   .hero-float-chip { display: none !important; }
 }
+
+/* Hide scrollbar on the horizontally-scrollable tab row */
+.tabs-scroll::-webkit-scrollbar { display: none; }
 .masonry-item {
   break-inside: avoid;
   margin-bottom: 16px;

@@ -170,7 +170,7 @@ function GalleryTab({ items, setItems }: { items: GalleryItem[]; setItems: React
         </div>
       )}
 
-      <div className="glass-card overflow-hidden">
+      <div className="glass-card" style={{ overflow: 'clip' }}>
         <div className="table-scroll">
         <table className="glass-table">
           <thead><tr><th>Preview</th><th>Title</th><th>Date</th><th>Category</th><th>Image URL</th><th>Order</th><th>Actions</th></tr></thead>
@@ -678,12 +678,12 @@ export default function AdminDashboard() {
           ))}
         </div>
 
-        {/* Tabs */}
-        <div className="flex gap-2 mb-6 flex-wrap">
+        {/* Tabs — horizontally scrollable on mobile */}
+        <div className="flex gap-2 mb-6 overflow-x-auto pb-1" style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', msOverflowStyle: 'none' } as React.CSSProperties}>
           {tabs.map(t => (
             <button key={t.id} onClick={() => setTab(t.id)}
-              className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium transition-all duration-200"
-              style={{ background: tab === t.id ? 'var(--navy)' : 'rgba(255,255,255,0.5)', color: tab === t.id ? 'white' : 'rgba(26,54,93,0.7)', border: tab === t.id ? 'none' : '1px solid rgba(255,255,255,0.5)', backdropFilter: 'blur(8px)' }}>
+              className="flex items-center gap-2 px-4 py-2.5 rounded-full text-sm font-medium transition-all duration-200 flex-shrink-0"
+              style={{ background: tab === t.id ? 'var(--navy)' : 'rgba(255,255,255,0.5)', color: tab === t.id ? 'white' : 'rgba(26,54,93,0.7)', border: tab === t.id ? 'none' : '1px solid rgba(255,255,255,0.5)', backdropFilter: 'blur(8px)', whiteSpace: 'nowrap' }}>
               {t.icon} {t.label}
               <span className="rounded-full px-2 py-0.5 text-xs font-bold"
                 style={{ background: tab === t.id ? 'rgba(255,255,255,0.2)' : 'rgba(26,54,93,0.08)', color: tab === t.id ? 'white' : 'rgba(26,54,93,0.5)' }}>
@@ -694,7 +694,7 @@ export default function AdminDashboard() {
         </div>
 
         {loading ? (
-          <div className="glass-card p-16 flex items-center justify-center gap-3" style={{ color: 'rgba(26,54,93,0.4)' }}>
+          <div className="glass-card p-10 sm:p-16 flex items-center justify-center gap-3" style={{ color: 'rgba(26,54,93,0.4)' }}>
             <Loader2 size={22} style={{ animation: 'spin 1s linear infinite' }} /><span>Loading data…</span>
           </div>
         ) : (
@@ -732,7 +732,7 @@ export default function AdminDashboard() {
                   </div>
                 )}
 
-                <div className="glass-card overflow-hidden">
+                <div className="glass-card" style={{ overflow: 'clip' }}>
                   <div className="table-scroll">
                   <table className="glass-table">
                     <thead><tr><th>Facility</th><th>Date</th><th>Time</th><th>Slots</th><th>Status</th><th>Actions</th></tr></thead>
@@ -820,7 +820,7 @@ export default function AdminDashboard() {
                     <span className="badge-approved">{volunteers.filter(v => v.status === 'approved').length} Approved</span>
                   </div>
                 </div>
-                <div className="glass-card overflow-hidden">
+                <div className="glass-card" style={{ overflow: 'clip' }}>
                   <div className="table-scroll">
                   <table className="glass-table">
                     <thead><tr><th>Name</th><th>Email</th><th>Instrument</th><th>Hours</th><th>Media ✓</th><th>Status</th><th>Toggle</th></tr></thead>
@@ -878,7 +878,7 @@ export default function AdminDashboard() {
                   <h2 style={{ fontWeight: 700, fontSize: '1.05rem' }}>Sign-up Tracker</h2>
                   <p style={{ color: 'rgba(26,54,93,0.5)', fontSize: '0.85rem', marginTop: '0.25rem' }}>All volunteer event claims ({signups.length} total). Approve hours for past events, or remove any signup.</p>
                 </div>
-                <div className="glass-card overflow-hidden">
+                <div className="glass-card" style={{ overflow: 'clip' }}>
                   <div className="table-scroll">
                   <table className="glass-table">
                     <thead><tr><th>Volunteer</th><th>Event / Facility</th><th>Date</th><th>Setlist</th><th>Hours</th><th>Status</th><th>Actions</th></tr></thead>

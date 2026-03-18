@@ -36,8 +36,8 @@ export default function About() {
 
       {/* Mission Block */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 pb-16">
-        <div className="glass-card p-10 md:p-14">
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <div className="glass-card p-6 sm:p-10 md:p-14">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 md:gap-12 items-center">
             <div>
               <h2 style={{ fontSize: 'clamp(1.5rem, 3vw, 2rem)', fontWeight: 700, marginBottom: '1.25rem', lineHeight: 1.3 }}>
                 Why music? Why now?
@@ -63,7 +63,7 @@ export default function About() {
 
       {/* Ikigai */}
       <section className="max-w-6xl mx-auto px-4 sm:px-6 pb-16">
-        <div className="glass-card p-10 md:p-14" style={{ background: 'rgba(178,216,216,0.07)', border: '1px solid rgba(178,216,216,0.25)' }}>
+        <div className="glass-card p-6 sm:p-10 md:p-14" style={{ background: 'rgba(178,216,216,0.07)', border: '1px solid rgba(178,216,216,0.25)' }}>
           <div className="max-w-2xl mx-auto text-center mb-10">
             <p style={{ fontSize: '0.8rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.12em', color: '#2d6a6a', marginBottom: '0.75rem' }}>Our Foundation</p>
             <h2 style={{ fontSize: 'clamp(1.5rem, 3vw, 2rem)', fontWeight: 700, letterSpacing: '-0.015em', marginBottom: '1.1rem' }}>Rooted in <em>Ikigai</em></h2>
