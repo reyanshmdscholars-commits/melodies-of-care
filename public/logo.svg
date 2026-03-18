@@ -1,0 +1,48 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 200 200" fill="none">
+  <!-- Light blue background circle (optional, remove if using on colored bg) -->
+  <!-- Heart shape -->
+  <path d="M100 170 C60 145 20 120 20 80 C20 55 38 38 60 38 C74 38 86 46 100 60 C114 46 126 38 140 38 C162 38 180 55 180 80 C180 120 140 145 100 170Z"
+    fill="#F0EDE8" stroke="none"/>
+
+  <!-- Coral hand / bottom-left sweep -->
+  <path d="M35 105 C28 95 24 86 22 80 C30 105 50 130 72 148 C55 138 42 123 35 105Z"
+    fill="#D4835A" opacity="0.75"/>
+
+  <!-- Teal hand / bottom-right sweep -->
+  <path d="M165 105 C172 95 176 86 178 80 C170 105 150 130 128 148 C145 138 158 123 165 105Z"
+    fill="#3A8A8A" opacity="0.75"/>
+
+  <!-- Music staff lines (wavy, left side) -->
+  <path d="M38 85 Q52 80 66 85" stroke="#5A9BAA" stroke-width="2" stroke-linecap="round"/>
+  <path d="M36 92 Q50 87 65 92" stroke="#5A9BAA" stroke-width="2" stroke-linecap="round"/>
+  <path d="M38 99 Q52 94 66 99" stroke="#5A9BAA" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- Large music note (teal) -->
+  <ellipse cx="52" cy="105" rx="9" ry="7" fill="#2B7080" transform="rotate(-20 52 105)"/>
+  <line x1="61" y1="100" x2="61" y2="68" stroke="#2B7080" stroke-width="3.5" stroke-linecap="round"/>
+  <!-- Flag on note stem -->
+  <path d="M61 68 Q78 74 72 84" stroke="#2B7080" stroke-width="3" fill="none" stroke-linecap="round"/>
+
+  <!-- Small music note -->
+  <ellipse cx="74" cy="100" rx="6" ry="4.5" fill="#4A9BAA" transform="rotate(-20 74 100)"/>
+  <line x1="80" y1="96" x2="80" y2="78" stroke="#4A9BAA" stroke-width="2.5" stroke-linecap="round"/>
+
+  <!-- Tiny eighth note dot -->
+  <ellipse cx="83" cy="93" rx="4" ry="3" fill="#7ABACB" transform="rotate(-20 83 93)"/>
+  <line x1="87" y1="90" x2="87" y2="78" stroke="#7ABACB" stroke-width="2" stroke-linecap="round"/>
+
+  <!-- RIGHT SIDE: Two human figures -->
+  <!-- Figure 1 (blue - young/volunteer) -->
+  <!-- Head -->
+  <circle cx="118" cy="72" r="10" fill="#5B8DB8"/>
+  <!-- Body -->
+  <path d="M108 95 Q110 80 118 82 Q126 80 128 95 L125 120 L111 120 Z" fill="#5B8DB8"/>
+  <!-- Arm reaching to right figure -->
+  <path d="M128 92 Q140 88 148 95" stroke="#5B8DB8" stroke-width="5" stroke-linecap="round" fill="none"/>
+
+  <!-- Figure 2 (coral - elder/resident) -->
+  <!-- Head -->
+  <circle cx="148" cy="80" r="9" fill="#D4835A"/>
+  <!-- Body (hunched slightly) -->
+  <path d="M139 100 Q141 88 148 90 Q155 88 158 100 L156 120 L141 120 Z" fill="#D4835A"/>
+</svg>
