@@ -1,10 +1,18 @@
 'use client'
 import { useEffect, useState } from 'react'
-import { supabase, type Volunteer } from '@/lib/supabase'
+import { supabase } from '@/lib/supabase'
 import { Trophy, Music, Clock, Award } from 'lucide-react'
 
+type LeaderboardEntry = {
+  id: string
+  name: string
+  instrument: string
+  hours: number
+  status: string
+}
+
 export default function LeaderboardPage() {
-  const [volunteers, setVolunteers] = useState<Volunteer[]>([])
+  const [volunteers, setVolunteers] = useState<LeaderboardEntry[]>([])
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
