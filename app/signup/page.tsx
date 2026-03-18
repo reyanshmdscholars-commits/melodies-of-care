@@ -31,6 +31,7 @@ export default function SignupPage() {
     if (!form.instrument.trim()) return 'Please enter your primary instrument.'
     if (form.password.length < 6)         return 'Password must be at least 6 characters.'
     if (form.password !== form.confirm)   return 'Passwords do not match.'
+    if (!mediaConsent) return 'You must agree to the photo and video consent to volunteer with us.'
     return ''
   }
 
@@ -201,29 +202,30 @@ export default function SignupPage() {
               )}
             </div>
 
-            {/* Media Consent */}
+            {/* Media Consent — required */}
             <div
               onClick={() => setMediaConsent(p => !p)}
               style={{
                 display: 'flex', alignItems: 'flex-start', gap: '0.75rem',
                 padding: '0.85rem 1rem', borderRadius: 12, cursor: 'pointer',
-                background: mediaConsent ? 'rgba(100,200,150,0.08)' : 'rgba(26,54,93,0.03)',
-                border: `1.5px solid ${mediaConsent ? 'rgba(100,200,150,0.4)' : 'rgba(26,54,93,0.1)'}`,
+                background: mediaConsent ? 'rgba(100,200,150,0.08)' : 'rgba(240,147,91,0.04)',
+                border: `1.5px solid ${mediaConsent ? 'rgba(100,200,150,0.4)' : 'rgba(240,147,91,0.3)'}`,
                 transition: 'all 0.18s ease',
               }}
             >
               <div style={{
                 width: 18, height: 18, borderRadius: 5, flexShrink: 0, marginTop: 1,
                 background: mediaConsent ? '#1a6a40' : 'white',
-                border: `2px solid ${mediaConsent ? '#1a6a40' : 'rgba(26,54,93,0.25)'}`,
+                border: `2px solid ${mediaConsent ? '#1a6a40' : 'rgba(240,147,91,0.55)'}`,
                 display: 'flex', alignItems: 'center', justifyContent: 'center',
                 transition: 'all 0.18s ease',
               }}>
                 {mediaConsent && <Check size={11} color="white" strokeWidth={3} />}
               </div>
               <p style={{ fontSize: '0.8rem', color: 'rgba(26,54,93,0.7)', lineHeight: 1.55, userSelect: 'none' }}>
-                I consent to having my photo and video likeness used in Melodies of Care&apos;s
-                promotional materials, social media, and event documentation. <span style={{ color: 'rgba(26,54,93,0.4)', fontSize: '0.75rem' }}>(Optional)</span>
+                I consent to having my photo and video likeness recorded and used in Melodies of Care&apos;s
+                promotional materials, social media, and event documentation.{' '}
+                <span style={{ color: 'var(--coral)', fontWeight: 600, fontSize: '0.75rem' }}>Required</span>
               </p>
             </div>
 
