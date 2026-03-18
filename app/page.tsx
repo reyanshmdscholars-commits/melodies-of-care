@@ -2,7 +2,8 @@
 import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
-import { Music, Heart, Users, ArrowRight, UserPlus, LogIn } from 'lucide-react'
+import { Music, Heart, Users, ArrowRight, UserPlus, LogIn, Megaphone, X } from 'lucide-react'
+import { supabase } from '@/lib/supabase'
 
 function useCountUp(target: number, duration = 1800, start = false) {
   const [count, setCount] = useState(0)
@@ -46,8 +47,45 @@ function StatCard({ icon, value, label, delay }: {
 }
 
 export default function Home() {
+  const [announcement, setAnnouncement] = useState<string | null>(null)
+  const [bannerDismissed, setBannerDismissed] = useState(false)
+
+  useEffect(() => {
+    supabase
+      .from('announcements')
+      .select('message')
+      .eq('is_active', true)
+      .order('created_at', { ascending: false })
+      .limit(1)
+      .single()
+      .then(({ data }) => { if (data) setAnnouncement(data.message) })
+  }, [])
+
   return (
     <div>
+      {/* ── ANNOUNCEMENT BANNER ───────────────────────────────── */}
+      {announcement && !bannerDismissed && (
+        <div style={{
+          background: 'linear-gradient(90deg, rgba(240,147,91,0.1) 0%, rgba(178,216,216,0.1) 100%)',
+          borderBottom: '1px solid rgba(240,147,91,0.2)',
+          padding: '10px 24px',
+          display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '10px',
+          position: 'relative', zIndex: 40,
+        }}>
+          <Megaphone size={14} color="var(--coral)" style={{ flexShrink: 0 }} />
+          <p style={{ fontSize: '0.875rem', color: 'var(--navy)', fontWeight: 500, textAlign: 'center', margin: 0 }}>
+            {announcement}
+          </p>
+          <button
+            onClick={() => setBannerDismissed(true)}
+            style={{ position: 'absolute', right: 16, background: 'none', border: 'none', cursor: 'pointer', color: 'rgba(26,54,93,0.4)', padding: 4, display: 'flex', alignItems: 'center' }}
+            aria-label="Dismiss announcement"
+          >
+            <X size={14} />
+          </button>
+        </div>
+      )}
+
       {/* ── HERO ─────────────────────────────────────────────── */}
       <section className="diamond-grid music-notes-bg relative min-h-screen flex items-center" style={{ paddingTop: '5rem' }}>
         {/* Ambient blobs */}

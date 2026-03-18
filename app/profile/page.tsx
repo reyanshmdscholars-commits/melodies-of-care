@@ -6,6 +6,14 @@ import { User, Music, Calendar, Clock, Check, Eye, EyeOff, Save, LogOut, X, Load
 import { supabase, hashPassword, type Event } from '@/lib/supabase'
 import { useVolunteerAuth } from '@/lib/volunteer-auth'
 
+const MILESTONES = [
+  { hours: 5,   emoji: '🌱', label: 'Starter'    },
+  { hours: 10,  emoji: '⭐', label: 'Rising Star' },
+  { hours: 25,  emoji: '🏅', label: 'Dedicated'  },
+  { hours: 50,  emoji: '🏆', label: 'Champion'   },
+  { hours: 100, emoji: '💎', label: 'Legend'     },
+]
+
 export default function ProfilePage() {
   const router = useRouter()
   const { volunteer, login, logout } = useVolunteerAuth()
@@ -151,6 +159,45 @@ export default function ProfilePage() {
                   <div style={{ fontSize: '0.72rem', color: 'rgba(26,54,93,0.5)', fontWeight: 500 }}>Hours logged</div>
                 </div>
               </div>
+            </div>
+
+            {/* Milestone Tracker */}
+            <div className="glass-card p-6">
+              <h3 style={{ fontWeight: 700, fontSize: '0.95rem', marginBottom: '1.1rem', display: 'flex', alignItems: 'center', gap: '8px' }}>
+                <Award size={15} color="var(--coral)" /> Milestones
+              </h3>
+              <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '1rem' }}>
+                {MILESTONES.map(m => {
+                  const earned = volunteer.hours >= m.hours
+                  return (
+                    <div key={m.hours} style={{ display: 'flex', flexDirection: 'column', alignItems: 'center', gap: '3px', opacity: earned ? 1 : 0.25, transition: 'opacity 0.4s' }}>
+                      <div style={{ fontSize: '1.5rem', filter: earned ? 'none' : 'grayscale(1)' }}>{m.emoji}</div>
+                      <div style={{ fontSize: '0.58rem', fontWeight: 700, color: 'var(--navy)', textAlign: 'center', lineHeight: 1.2 }}>{m.label}</div>
+                      <div style={{ fontSize: '0.55rem', color: 'rgba(26,54,93,0.42)' }}>{m.hours}h</div>
+                    </div>
+                  )
+                })}
+              </div>
+              {(() => {
+                const next = MILESTONES.find(m => m.hours > volunteer.hours)
+                const prev = [...MILESTONES].reverse().find(m => m.hours <= volunteer.hours)
+                if (!next) return (
+                  <p style={{ fontSize: '0.82rem', color: 'var(--coral)', fontWeight: 700, textAlign: 'center' }}>🎉 All milestones achieved!</p>
+                )
+                const start = prev?.hours ?? 0
+                const pct = Math.round(((volunteer.hours - start) / (next.hours - start)) * 100)
+                return (
+                  <>
+                    <div style={{ height: 7, borderRadius: 100, background: 'rgba(26,54,93,0.07)', overflow: 'hidden', marginBottom: '0.5rem' }}>
+                      <div style={{ height: '100%', width: `${pct}%`, borderRadius: 100, background: 'linear-gradient(90deg, var(--teal), var(--coral))', transition: 'width 1.2s cubic-bezier(0.34,1.56,0.64,1)' }} />
+                    </div>
+                    <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                      <span style={{ fontSize: '0.7rem', color: 'rgba(26,54,93,0.45)' }}>{volunteer.hours}h logged</span>
+                      <span style={{ fontSize: '0.7rem', color: 'rgba(26,54,93,0.55)', fontWeight: 600 }}>{next.hours - volunteer.hours}h to {next.emoji} {next.label}</span>
+                    </div>
+                  </>
+                )
+              })()}
             </div>
 
             {/* Certificate */}

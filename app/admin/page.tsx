@@ -498,6 +498,14 @@ export default function AdminDashboard() {
     const newStatus = v.status === 'pending' ? 'approved' : 'pending'
     await supabase.from('volunteers').update({ status: newStatus }).eq('id', v.id)
     setVolunteers(prev => prev.map(vol => vol.id === v.id ? { ...vol, status: newStatus } : vol))
+    // Open pre-filled welcome email when approving
+    if (newStatus === 'approved') {
+      const subject = encodeURIComponent('Welcome to Melodies of Care! 🎵')
+      const body = encodeURIComponent(
+        `Hi ${v.name.split(' ')[0]},\n\nGreat news — your Melodies of Care volunteer application has been approved!\n\nYou can now log in at https://melodiesofcare.com/login and start signing up for upcoming performances at senior care facilities near you.\n\nThank you for joining our mission to bring music to those who need it most.\n\nWarm regards,\nThe Melodies of Care Team`
+      )
+      window.open(`mailto:${v.email}?subject=${subject}&body=${body}`, '_blank')
+    }
     setTogglingId(null)
   }
 
