@@ -75,6 +75,7 @@ p, span, label, input, textarea, select, button, a {
 /* ── Liquid mesh background ──────────────────────────────── */
 .liquid-mesh {
   position: fixed; inset: 0; pointer-events: none; z-index: 0;
+  overflow: hidden;
 }
 .liquid-mesh::before {
   content: '';

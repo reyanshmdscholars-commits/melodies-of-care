@@ -3,8 +3,9 @@ import { useState, useEffect } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { usePathname, useRouter } from 'next/navigation'
-import { Menu, X, LogOut, User } from 'lucide-react'
+import { Menu, X, LogOut, User, Lock } from 'lucide-react'
 import { useVolunteerAuth } from '@/lib/volunteer-auth'
+import AdminGateDialog from './AdminGateDialog'
 
 const links = [
   { href: '/',            label: 'Home' },
@@ -21,6 +22,7 @@ export default function Navbar() {
   const router = useRouter()
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [adminOpen, setAdminOpen] = useState(false)
   const { volunteer, logout } = useVolunteerAuth()
 
   useEffect(() => {
@@ -99,6 +101,13 @@ export default function Navbar() {
             <div className="flex items-center gap-2 ml-2">
               <Link href="/login"  className="btn-ghost px-5 py-2 text-sm" style={{ textDecoration: 'none' }}>Log In</Link>
               <Link href="/signup" className="btn-coral px-5 py-2 text-sm" style={{ textDecoration: 'none' }}>Sign Up</Link>
+              <button
+                onClick={() => setAdminOpen(true)}
+                className="flex items-center gap-1.5 px-5 py-2 rounded-full text-sm font-medium transition-all duration-200"
+                style={{ background: 'rgba(26,54,93,0.07)', color: 'var(--navy)', border: '1px solid rgba(26,54,93,0.15)' }}
+              >
+                <Lock size={13} /> Admin Login
+              </button>
             </div>
           )}
         </div>
@@ -112,6 +121,8 @@ export default function Navbar() {
           {open ? <X size={20} /> : <Menu size={20} />}
         </button>
       </div>
+
+      <AdminGateDialog open={adminOpen} onClose={() => setAdminOpen(false)} />
 
       {/* Mobile Menu */}
       {open && (
@@ -155,6 +166,13 @@ export default function Navbar() {
             <>
               <Link href="/login"  onClick={() => setOpen(false)} className="px-4 py-3 rounded-xl text-sm font-medium" style={{ color: 'rgba(26,54,93,0.8)' }}>Log In</Link>
               <Link href="/signup" onClick={() => setOpen(false)} className="px-4 py-3 rounded-xl text-sm font-medium" style={{ color: 'var(--coral)', fontWeight: 600 }}>Sign Up</Link>
+              <button
+                onClick={() => { setAdminOpen(true); setOpen(false) }}
+                className="px-4 py-3 rounded-xl text-sm font-medium text-left flex items-center gap-2"
+                style={{ color: 'var(--navy)' }}
+              >
+                <Lock size={14} /> Admin Login
+              </button>
             </>
           )}
         </div>
