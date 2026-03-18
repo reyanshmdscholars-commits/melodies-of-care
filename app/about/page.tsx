@@ -17,7 +17,7 @@ export default function About() {
   return (
     <div style={{ paddingTop: '5rem' }}>
       {/* Hero */}
-      <section className="music-notes-bg max-w-6xl mx-auto px-6 py-20" style={{ position: 'relative' }}>
+      <section className="music-notes-bg max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-20" style={{ position: 'relative' }}>
         {/* Decorative scattered notes */}
         <span style={{ position: 'absolute', top: '10%', right: '5%', fontSize: '3.5rem', color: 'rgba(178,216,216,0.2)', pointerEvents: 'none', userSelect: 'none', animation: 'floatNote1 16s ease-in-out infinite' }}>♬</span>
         <span style={{ position: 'absolute', bottom: '5%', right: '20%', fontSize: '2rem', color: 'rgba(240,147,91,0.18)', pointerEvents: 'none', userSelect: 'none', animation: 'floatNote2 20s ease-in-out infinite 1.5s' }}>♪</span>
@@ -35,7 +35,7 @@ export default function About() {
       </section>
 
       {/* Mission Block */}
-      <section className="max-w-6xl mx-auto px-6 pb-16">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 pb-16">
         <div className="glass-card p-10 md:p-14">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
             <div>
@@ -62,7 +62,7 @@ export default function About() {
       </section>
 
       {/* Ikigai */}
-      <section className="max-w-6xl mx-auto px-6 pb-16">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 pb-16">
         <div className="glass-card p-10 md:p-14" style={{ background: 'rgba(178,216,216,0.07)', border: '1px solid rgba(178,216,216,0.25)' }}>
           <div className="max-w-2xl mx-auto text-center mb-10">
             <p style={{ fontSize: '0.8rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.12em', color: '#2d6a6a', marginBottom: '0.75rem' }}>Our Foundation</p>
@@ -89,7 +89,7 @@ export default function About() {
       </section>
 
       {/* Values */}
-      <section className="max-w-6xl mx-auto px-6 py-16">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16">
         <div className="text-center mb-12">
           <p style={{ fontSize: '0.8rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--coral)', marginBottom: '0.75rem' }}>Our Values</p>
           <h2 style={{ fontSize: 'clamp(1.5rem, 3vw, 2.25rem)', fontWeight: 700, letterSpacing: '-0.015em' }}>What guides every visit</h2>
@@ -106,7 +106,7 @@ export default function About() {
       </section>
 
       {/* Timeline */}
-      <section className="max-w-6xl mx-auto px-6 py-16 pb-24">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16 pb-24">
         <div className="text-center mb-12">
           <p style={{ fontSize: '0.8rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--coral)', marginBottom: '0.75rem' }}>Our Story</p>
           <h2 style={{ fontSize: 'clamp(1.5rem, 3vw, 2.25rem)', fontWeight: 700, letterSpacing: '-0.015em' }}>How we got here</h2>

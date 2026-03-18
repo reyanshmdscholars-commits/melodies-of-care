@@ -208,6 +208,30 @@ p, span, label, input, textarea, select, button, a {
 .masonry-grid { columns: 3; column-gap: 16px; }
 @media (max-width: 768px) { .masonry-grid { columns: 2; } }
 @media (max-width: 480px) { .masonry-grid { columns: 1; } }
+
+/* ── Mobile / tablet responsive overrides ────────────────── */
+/* Tables: allow horizontal scroll inside cards */
+.table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+.table-scroll .glass-table {
+  min-width: 580px;
+}
+
+/* Tighten table cell padding on small screens */
+@media (max-width: 640px) {
+  .glass-table th { padding: 6px 10px; }
+  .glass-table td { padding: 11px 10px; }
+
+  /* Reduce section padding */
+  .section-px { padding-left: 1rem; padding-right: 1rem; }
+}
+
+/* Hide decorative floating chips on very small screens */
+@media (max-width: 480px) {
+  .hero-float-chip { display: none !important; }
+}
 .masonry-item {
   break-inside: avoid;
   margin-bottom: 16px;

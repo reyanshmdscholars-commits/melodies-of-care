@@ -275,8 +275,8 @@ export default function Events() {
         </div>
       )}
 
-      <section className="max-w-6xl mx-auto px-6 py-16 pb-24">
-        <div className="flex items-start justify-between gap-4 mb-12">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-12 sm:py-16 pb-24">
+        <div className="flex items-start justify-between gap-4 mb-10 sm:mb-12 flex-wrap">
           <div className="max-w-2xl">
             <p style={{ fontSize: '0.8rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--coral)', marginBottom: '1rem' }}>Schedule</p>
             <h1 style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 800, lineHeight: 1.1, letterSpacing: '-0.02em', marginBottom: '1.25rem' }}>Upcoming Events</h1>

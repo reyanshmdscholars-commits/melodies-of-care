@@ -119,7 +119,7 @@ export default function ProfilePage() {
 
   return (
     <div style={{ paddingTop: '5rem', minHeight: '100vh' }}>
-      <div className="max-w-4xl mx-auto px-6 py-16 pb-24">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 py-10 sm:py-16 pb-24">
 
         {/* Header */}
         <div className="flex items-start justify-between mb-10 flex-wrap gap-4">

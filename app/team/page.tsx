@@ -43,7 +43,7 @@ export default function Team() {
 
   return (
     <div style={{ paddingTop: '5rem' }}>
-      <section className="max-w-6xl mx-auto px-6 py-20">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
         <div className="max-w-2xl mb-14">
           <p style={{ fontSize: '0.8rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--coral)', marginBottom: '1rem' }}>The People</p>
           <h1 style={{ fontSize: 'clamp(2rem, 5vw, 3rem)', fontWeight: 800, lineHeight: 1.1, letterSpacing: '-0.02em', marginBottom: '1.25rem' }}>Meet the Team</h1>
@@ -64,7 +64,7 @@ export default function Team() {
         )}
       </section>
 
-      <section className="max-w-6xl mx-auto px-6 pb-24">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 pb-24">
         <div className="glass-card p-10 md:p-14 text-center" style={{ background: 'linear-gradient(135deg, rgba(26,54,93,0.04) 0%, rgba(240,147,91,0.06) 100%)' }}>
           <h2 style={{ fontSize: 'clamp(1.5rem, 3vw, 2rem)', fontWeight: 700, marginBottom: '1rem' }}>Want to join this team?</h2>
           <p style={{ color: 'rgba(26,54,93,0.62)', fontSize: '0.95rem', marginBottom: '2rem', maxWidth: '480px', margin: '0 auto 2rem' }}>

@@ -97,8 +97,8 @@ export default function Home() {
         <div style={{ position: 'absolute', top: '25%', right: '8%', fontSize: '1.8rem', color: 'rgba(26,54,93,0.07)', pointerEvents: 'none', animation: 'floatNote1 16s ease-in-out infinite 2s', userSelect: 'none' }}>♬</div>
         <div style={{ position: 'absolute', bottom: '20%', right: '15%', fontSize: '1.2rem', color: 'rgba(178,216,216,0.3)', pointerEvents: 'none', animation: 'floatNote2 12s ease-in-out infinite 1s', userSelect: 'none' }}>♪</div>
 
-        <div className="max-w-7xl mx-auto px-6 py-24 w-full">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 py-16 sm:py-24 w-full">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
 
             {/* Left: copy */}
             <div>
@@ -123,15 +123,15 @@ export default function Home() {
                 </Link>
               </div>
               {/* Trust bar */}
-              <div className="flex items-center gap-6 mt-10 pt-8" style={{ borderTop: '1px solid rgba(26,54,93,0.07)' }}>
+              <div className="flex flex-wrap items-center gap-4 sm:gap-6 mt-10 pt-8" style={{ borderTop: '1px solid rgba(26,54,93,0.07)' }}>
                 {[['2', 'Concerts'], ['10', 'Volunteers'], ['2', 'Partner Homes']].map(([n, l]) => (
                   <div key={l} className="text-center">
                     <div style={{ fontSize: '1.35rem', fontWeight: 800, color: 'var(--navy)', lineHeight: 1 }}>{n}</div>
                     <div style={{ fontSize: '0.7rem', color: 'rgba(26,54,93,0.45)', fontWeight: 500, marginTop: '2px' }}>{l}</div>
                   </div>
                 ))}
-                <div style={{ width: 1, height: 32, background: 'rgba(26,54,93,0.1)' }} />
-                <p style={{ fontSize: '0.78rem', color: 'rgba(26,54,93,0.45)', fontStyle: 'italic', maxWidth: 160 }}>
+                <div className="hidden sm:block" style={{ width: 1, height: 32, background: 'rgba(26,54,93,0.1)' }} />
+                <p className="hidden sm:block" style={{ fontSize: '0.78rem', color: 'rgba(26,54,93,0.45)', fontStyle: 'italic', maxWidth: 160 }}>
                   Founded on the Japanese concept of <em>ikigai</em>
                 </p>
               </div>
@@ -139,13 +139,13 @@ export default function Home() {
 
             {/* Right: logo feature card */}
             <div className="flex items-center justify-center">
-              <div className="relative">
+              <div className="relative mx-8 sm:mx-10">
                 {/* Outer glow ring */}
                 <div style={{ position: 'absolute', inset: -20, borderRadius: '50%', background: 'radial-gradient(ellipse, rgba(178,216,216,0.3) 0%, transparent 70%)', pointerEvents: 'none' }} />
                 {/* Main card */}
-                <div className="glass-card p-10 flex flex-col items-center text-center"
-                  style={{ width: 320, background: 'rgba(255,255,255,0.6)', border: '1px solid rgba(255,255,255,0.45)' }}>
-                  <div className="w-36 h-36 rounded-3xl overflow-hidden flex items-center justify-center mb-5"
+                <div className="glass-card p-8 sm:p-10 flex flex-col items-center text-center"
+                  style={{ width: 'min(320px, calc(100vw - 5rem))', background: 'rgba(255,255,255,0.6)', border: '1px solid rgba(255,255,255,0.45)' }}>
+                  <div className="w-28 h-28 sm:w-36 sm:h-36 rounded-3xl overflow-hidden flex items-center justify-center mb-5"
                     style={{ background: 'rgba(138,187,205,0.18)', border: '1.5px solid rgba(178,216,216,0.4)', boxShadow: '0 8px 32px rgba(26,54,93,0.1)' }}>
                     <Image src="/logo.png" alt="Melodies of Care" width={110} height={110} />
                   </div>
@@ -158,12 +158,12 @@ export default function Home() {
                     <span className="badge-approved">Active</span>
                   </div>
                 </div>
-                {/* Floating notes */}
-                <div className="glass-card px-4 py-3 absolute -top-4 -right-8 flex items-center gap-2"
+                {/* Floating chips — hidden on very small screens to prevent overflow */}
+                <div className="hero-float-chip glass-card px-4 py-3 absolute -top-4 -right-8 flex items-center gap-2"
                   style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--navy)', borderRadius: '14px', boxShadow: '0 8px 24px rgba(26,54,93,0.1)' }}>
                   <Music size={14} color="var(--coral)" /> Live Performances
                 </div>
-                <div className="glass-card px-4 py-3 absolute -bottom-4 -left-8 flex items-center gap-2"
+                <div className="hero-float-chip glass-card px-4 py-3 absolute -bottom-4 -left-8 flex items-center gap-2"
                   style={{ fontSize: '0.8rem', fontWeight: 600, color: 'var(--navy)', borderRadius: '14px', boxShadow: '0 8px 24px rgba(26,54,93,0.1)' }}>
                   <Heart size={14} color="var(--coral)" fill="currentColor" /> Meaningful Impact
                 </div>
@@ -174,7 +174,7 @@ export default function Home() {
       </section>
 
       {/* ── STATS ────────────────────────────────────────────── */}
-      <section className="max-w-6xl mx-auto px-6 py-20">
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-16 sm:py-20">
         <div className="text-center mb-14">
           <p className="section-label">Our Impact</p>
           <h2 style={{ fontSize: 'clamp(1.75rem, 4vw, 2.5rem)', fontWeight: 700, letterSpacing: '-0.02em' }}>
@@ -192,8 +192,8 @@ export default function Home() {
       </section>
 
       {/* ── MISSION ──────────────────────────────────────────── */}
-      <section className="max-w-6xl mx-auto px-6 py-10 pb-20">
-        <div className="glass-card p-10 md:p-14 flex flex-col md:flex-row gap-14 items-center"
+      <section className="max-w-6xl mx-auto px-4 sm:px-6 py-10 pb-20">
+        <div className="glass-card p-7 sm:p-10 md:p-14 flex flex-col md:flex-row gap-8 md:gap-14 items-center"
           style={{ background: 'linear-gradient(135deg, rgba(178,216,216,0.08) 0%, rgba(255,255,255,0.45) 100%)' }}>
           <div className="flex-1">
             <p className="section-label">Our Mission</p>
@@ -216,7 +216,7 @@ export default function Home() {
       </section>
 
       {/* ── JOIN CTA ──────────────────────────────────────────── */}
-      <section id="volunteer" className="max-w-6xl mx-auto px-6 pb-28">
+      <section id="volunteer" className="max-w-6xl mx-auto px-4 sm:px-6 pb-28">
         <div className="glass-card p-10 md:p-16 text-center"
           style={{ background: 'linear-gradient(135deg, rgba(26,54,93,0.03) 0%, rgba(240,147,91,0.07) 100%)', border: '1px solid rgba(240,147,91,0.15)' }}>
           <div className="w-20 h-20 rounded-3xl overflow-hidden flex items-center justify-center mx-auto mb-6"

@@ -171,6 +171,7 @@ function GalleryTab({ items, setItems }: { items: GalleryItem[]; setItems: React
       )}
 
       <div className="glass-card overflow-hidden">
+        <div className="table-scroll">
         <table className="glass-table">
           <thead><tr><th>Preview</th><th>Title</th><th>Date</th><th>Category</th><th>Image URL</th><th>Order</th><th>Actions</th></tr></thead>
           <tbody>
@@ -243,6 +244,7 @@ function GalleryTab({ items, setItems }: { items: GalleryItem[]; setItems: React
             {items.length === 0 && <tr><td colSpan={7} style={{ textAlign: 'center', color: 'rgba(26,54,93,0.4)', padding: '2rem' }}>No gallery items yet.</td></tr>}
           </tbody>
         </table>
+        </div>
       </div>
     </div>
   )
@@ -638,14 +640,14 @@ export default function AdminDashboard() {
 
   return (
     <div style={{ paddingTop: '5rem', minHeight: '100vh' }}>
-      <div className="max-w-7xl mx-auto px-6 py-10">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-8 sm:py-10">
         {/* Header */}
-        <div className="flex items-center justify-between mb-10">
+        <div className="flex items-start justify-between mb-8 sm:mb-10 flex-wrap gap-4">
           <div>
             <p style={{ fontSize: '0.78rem', fontWeight: 700, textTransform: 'uppercase', letterSpacing: '0.12em', color: 'var(--coral)', marginBottom: '0.4rem' }}>Admin Dashboard</p>
-            <h1 style={{ fontSize: 'clamp(1.75rem, 4vw, 2.5rem)', fontWeight: 800, letterSpacing: '-0.02em' }}>Melodies of Care</h1>
+            <h1 style={{ fontSize: 'clamp(1.5rem, 4vw, 2.5rem)', fontWeight: 800, letterSpacing: '-0.02em' }}>Melodies of Care</h1>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 flex-wrap">
             <button onClick={loadAll} className="btn-ghost px-4 py-2 text-sm flex items-center gap-2"><RefreshCw size={14} /> Refresh</button>
             <button
               onClick={handleGenerateImpactReport}
@@ -731,6 +733,7 @@ export default function AdminDashboard() {
                 )}
 
                 <div className="glass-card overflow-hidden">
+                  <div className="table-scroll">
                   <table className="glass-table">
                     <thead><tr><th>Facility</th><th>Date</th><th>Time</th><th>Slots</th><th>Status</th><th>Actions</th></tr></thead>
                     <tbody>
@@ -802,6 +805,7 @@ export default function AdminDashboard() {
                       {events.length === 0 && <tr><td colSpan={6} style={{ textAlign: 'center', color: 'rgba(26,54,93,0.4)', padding: '2rem' }}>No events yet. Click &quot;Add Event&quot; to get started.</td></tr>}
                     </tbody>
                   </table>
+                  </div>
                 </div>
               </div>
             )}
@@ -817,6 +821,7 @@ export default function AdminDashboard() {
                   </div>
                 </div>
                 <div className="glass-card overflow-hidden">
+                  <div className="table-scroll">
                   <table className="glass-table">
                     <thead><tr><th>Name</th><th>Email</th><th>Instrument</th><th>Hours</th><th>Media ✓</th><th>Status</th><th>Toggle</th></tr></thead>
                     <tbody>
@@ -861,6 +866,7 @@ export default function AdminDashboard() {
                       {volunteers.length === 0 && <tr><td colSpan={7} style={{ textAlign: 'center', color: 'rgba(26,54,93,0.4)', padding: '2rem' }}>No volunteers yet.</td></tr>}
                     </tbody>
                   </table>
+                  </div>
                 </div>
               </div>
             )}
@@ -873,6 +879,7 @@ export default function AdminDashboard() {
                   <p style={{ color: 'rgba(26,54,93,0.5)', fontSize: '0.85rem', marginTop: '0.25rem' }}>All volunteer event claims ({signups.length} total). Approve hours for past events, or remove any signup.</p>
                 </div>
                 <div className="glass-card overflow-hidden">
+                  <div className="table-scroll">
                   <table className="glass-table">
                     <thead><tr><th>Volunteer</th><th>Event / Facility</th><th>Date</th><th>Setlist</th><th>Hours</th><th>Status</th><th>Actions</th></tr></thead>
                     <tbody>
@@ -954,6 +961,7 @@ export default function AdminDashboard() {
                       {signups.length === 0 && <tr><td colSpan={7} style={{ textAlign: 'center', color: 'rgba(26,54,93,0.4)', padding: '2rem' }}>No sign-ups recorded yet.</td></tr>}
                     </tbody>
                   </table>
+                  </div>
                 </div>
               </div>
             )}
