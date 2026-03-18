@@ -427,6 +427,7 @@ export default function AdminDashboard() {
   const [togglingId, setTogglingId] = useState<string | null>(null)
   const [removingSignupId, setRemovingSignupId] = useState<string | null>(null)
   const [approvingHoursId, setApprovingHoursId] = useState<string | null>(null)
+  const [adjustingHoursId, setAdjustingHoursId] = useState<string | null>(null)
 
   // Announcements state
   const [newAnnouncement, setNewAnnouncement] = useState('')
@@ -507,6 +508,15 @@ export default function AdminDashboard() {
       window.open(`mailto:${v.email}?subject=${subject}&body=${body}`, '_blank')
     }
     setTogglingId(null)
+  }
+
+  // ── Adjust volunteer hours ──────────────────────────────────
+  const adjustHours = async (v: Volunteer, delta: number) => {
+    const newHours = Math.max(0, v.hours + delta)
+    setAdjustingHoursId(v.id)
+    await supabase.from('volunteers').update({ hours: newHours }).eq('id', v.id)
+    setVolunteers(prev => prev.map(vol => vol.id === v.id ? { ...vol, hours: newHours } : vol))
+    setAdjustingHoursId(null)
   }
 
   // ── Remove signup ──────────────────────────────────────────
@@ -815,7 +825,23 @@ export default function AdminDashboard() {
                           <td style={{ fontWeight: 600 }}>{v.name}</td>
                           <td style={{ fontSize: '0.82rem', color: 'rgba(26,54,93,0.6)' }}>{v.email}</td>
                           <td>{v.instrument}</td>
-                          <td>{v.hours}h</td>
+                          <td>
+                            <div style={{ display: 'flex', alignItems: 'center', gap: '6px' }}>
+                              <button
+                                onClick={() => adjustHours(v, -1)}
+                                disabled={adjustingHoursId === v.id || v.hours === 0}
+                                style={{ width: 22, height: 22, borderRadius: '50%', border: '1.5px solid rgba(220,60,60,0.4)', background: 'rgba(220,60,60,0.08)', color: '#c03030', fontWeight: 700, fontSize: '0.9rem', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', lineHeight: 1, opacity: (adjustingHoursId === v.id || v.hours === 0) ? 0.4 : 1, transition: 'all 0.15s' }}
+                              >−</button>
+                              <span style={{ minWidth: 28, textAlign: 'center', fontWeight: 600 }}>
+                                {adjustingHoursId === v.id ? '…' : `${v.hours}h`}
+                              </span>
+                              <button
+                                onClick={() => adjustHours(v, 1)}
+                                disabled={adjustingHoursId === v.id}
+                                style={{ width: 22, height: 22, borderRadius: '50%', border: '1.5px solid rgba(30,160,80,0.4)', background: 'rgba(30,160,80,0.08)', color: '#1a6a30', fontWeight: 700, fontSize: '0.9rem', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', lineHeight: 1, opacity: adjustingHoursId === v.id ? 0.4 : 1, transition: 'all 0.15s' }}
+                              >+</button>
+                            </div>
+                          </td>
                           <td>
                             {v.media_consent
                               ? <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#1a6a40', background: 'rgba(100,200,150,0.15)', padding: '2px 8px', borderRadius: '100px' }}>✓ Yes</span>
