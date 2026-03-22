@@ -280,7 +280,7 @@ export default function ProfilePage() {
                 <div className="flex flex-col gap-2">
                   {past.map(e => {
                     const detail = signupDetails[e.id]
-                    const hrs = (detail?.songs ?? 1) + 2
+                    const hrs = (detail?.songs ?? 1) === 1 ? 2 : 5
                     const approved = detail?.hours_approved ?? false
                     return (
                       <div key={e.id} className="flex items-center justify-between gap-3 p-3 rounded-xl" style={{ background: 'rgba(26,54,93,0.03)', border: '1px solid rgba(26,54,93,0.06)' }}>

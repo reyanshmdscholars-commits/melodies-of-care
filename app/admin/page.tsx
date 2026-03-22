@@ -886,7 +886,7 @@ export default function AdminDashboard() {
                       {signups.map(s => {
                         const event = events.find(e => e.id === s.event_id)
                         const isPast = event ? new Date(event.date) < new Date(new Date().toDateString()) : false
-                        const hrsLogged = (s.songs || 1) + 2
+                        const hrsLogged = (s.songs || 1) === 1 ? 2 : 5
                         return (
                           <tr key={s.id}>
                             <td style={{ fontWeight: 600 }}>{s.volunteer_name}</td>

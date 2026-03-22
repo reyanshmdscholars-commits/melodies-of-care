@@ -217,7 +217,7 @@ create policy "Public can read inquiries"   on public.facility_inquiries for sel
 
 -- ── RPC: approve_hours ───────────────────────────────────────
 -- Called by admin to approve hours for a specific signup.
--- hours = songs + 2  (1 song → 3 hrs, 2 songs → 4 hrs, 3 songs → 5 hrs)
+-- hours: 1 song → 2 hrs, 2 songs → 5 hrs (max 2 songs)
 create or replace function public.approve_hours(signup_id uuid)
 returns void language plpgsql security definer as $$
 declare
@@ -228,7 +228,7 @@ begin
   if rec is null then raise exception 'Signup not found.'; end if;
   if rec.hours_approved then raise exception 'Hours already approved.'; end if;
 
-  hrs := rec.songs + 2;
+  hrs := case when rec.songs = 1 then 2 else 5 end;
 
   update public.event_signups set hours_approved = true where id = signup_id;
   update public.volunteers    set hours = hours + hrs where id = rec.volunteer_id;

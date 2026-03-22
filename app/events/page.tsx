@@ -30,7 +30,7 @@ export default function Events() {
 
   // Song picker modal
   const [pickingEvent, setPickingEvent] = useState<Event | null>(null)
-  const [selectedSongs, setSelectedSongs] = useState<1|2|3>(1)
+  const [selectedSongs, setSelectedSongs] = useState<1|2>(1)
   const [songDetails, setSongDetails] = useState<SongDetail[]>([{ title: '', composer: '' }])
 
   useEffect(() => {
@@ -87,7 +87,7 @@ export default function Events() {
   }
 
   // Change song count and resize songDetails array
-  const handleSongCountChange = (n: 1 | 2 | 3) => {
+  const handleSongCountChange = (n: 1 | 2) => {
     setSelectedSongs(n)
     setSongDetails(prev => Array.from({ length: n }, (_, i) => prev[i] ?? { title: '', composer: '' }))
   }
@@ -493,8 +493,8 @@ export default function Events() {
               Number of songs <span style={{ color: 'var(--coral)' }}>*</span>
             </p>
             <div style={{ display: 'flex', gap: '0.5rem', marginBottom: '1.5rem' }}>
-              {([1, 2, 3] as const).map(n => {
-                const hrs = n + 2
+              {([1, 2] as const).map(n => {
+                const hrs = n === 1 ? 2 : 5
                 const isSelected = selectedSongs === n
                 return (
                   <button
@@ -579,7 +579,7 @@ export default function Events() {
                 className="btn-coral"
                 style={{ flex: 1, padding: '0.75rem', fontSize: '0.95rem', borderRadius: 12 }}
               >
-                <Check size={15} /> Confirm ({selectedSongs + 2} hrs)
+                <Check size={15} /> Confirm ({selectedSongs === 1 ? 2 : 5} hrs)
               </button>
               <button
                 onClick={() => setPickingEvent(null)}
