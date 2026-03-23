@@ -213,9 +213,11 @@ create table if not exists public.facility_inquiries (
 );
 drop policy if exists "Public can insert inquiries" on public.facility_inquiries;
 drop policy if exists "Public can read inquiries"   on public.facility_inquiries;
+drop policy if exists "Public can delete inquiries" on public.facility_inquiries;
 alter table public.facility_inquiries enable row level security;
 create policy "Public can insert inquiries" on public.facility_inquiries for insert with check (true);
 create policy "Public can read inquiries"   on public.facility_inquiries for select using (true);
+create policy "Public can delete inquiries" on public.facility_inquiries for delete using (true);
 
 -- ── RPC: approve_hours ───────────────────────────────────────
 -- Called by admin to approve hours for a specific signup.
