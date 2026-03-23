@@ -10,7 +10,7 @@ create table if not exists public.volunteers (
   email         text    not null default '',
   password_hash text    not null default '',
   instrument    text    not null default '',
-  status        text    not null default 'pending' check (status in ('pending','approved')),
+  status        text    not null default 'pending' check (status in ('pending','approved','rejected')),
   hours         integer not null default 0,
   media_consent boolean not null default false
 );

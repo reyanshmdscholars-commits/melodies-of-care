@@ -15,6 +15,7 @@ const links = [
   { href: '/events',      label: 'Events' },
   { href: '/leaderboard', label: 'Leaderboard' },
   { href: '/partner',     label: 'Partner With Us' },
+  { href: '/contact',     label: 'Contact' },
 ]
 
 export default function Navbar() {

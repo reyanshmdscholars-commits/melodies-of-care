@@ -21,7 +21,7 @@ export type Volunteer = {
   email: string
   password_hash: string
   instrument: string
-  status: 'pending' | 'approved'
+  status: 'pending' | 'approved' | 'rejected'
   hours: number
   media_consent: boolean
 }

@@ -149,14 +149,20 @@ export default function ProfilePage() {
                   <Music size={11} /> {volunteer.instrument || 'No instrument set'}
                 </span>
               </div>
-              <div className="mt-4 pt-4 grid grid-cols-2 gap-3" style={{ borderTop: '1px solid rgba(255,255,255,0.3)' }}>
+              <div className="mt-4 pt-4 grid grid-cols-3 gap-2" style={{ borderTop: '1px solid rgba(255,255,255,0.3)' }}>
                 <div className="text-center">
-                  <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--coral)' }}>{claimedEvents.length}</div>
-                  <div style={{ fontSize: '0.72rem', color: 'rgba(26,54,93,0.5)', fontWeight: 500 }}>Events claimed</div>
+                  <div style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--coral)' }}>{claimedEvents.length}</div>
+                  <div style={{ fontSize: '0.68rem', color: 'rgba(26,54,93,0.5)', fontWeight: 500 }}>Signed up</div>
                 </div>
                 <div className="text-center">
-                  <div style={{ fontSize: '1.5rem', fontWeight: 800, color: 'var(--navy)' }}>{volunteer.hours}</div>
-                  <div style={{ fontSize: '0.72rem', color: 'rgba(26,54,93,0.5)', fontWeight: 500 }}>Hours logged</div>
+                  <div style={{ fontSize: '1.4rem', fontWeight: 800, color: '#2d6a6a' }}>
+                    {claimedEvents.filter(e => new Date(e.date) < new Date()).length}
+                  </div>
+                  <div style={{ fontSize: '0.68rem', color: 'rgba(26,54,93,0.5)', fontWeight: 500 }}>Attended</div>
+                </div>
+                <div className="text-center">
+                  <div style={{ fontSize: '1.4rem', fontWeight: 800, color: 'var(--navy)' }}>{volunteer.hours}</div>
+                  <div style={{ fontSize: '0.68rem', color: 'rgba(26,54,93,0.5)', fontWeight: 500 }}>Hours logged</div>
                 </div>
               </div>
             </div>
@@ -224,6 +230,19 @@ export default function ProfilePage() {
                   Complete approved events to unlock your certificate.
                 </p>
               )}
+            </div>
+
+            {/* Resources quick link */}
+            <div className="glass-card p-5" style={{ border: '1px solid rgba(178,216,216,0.3)' }}>
+              <h3 style={{ fontWeight: 700, fontSize: '0.92rem', marginBottom: '0.35rem', display: 'flex', alignItems: 'center', gap: '7px' }}>
+                <Calendar size={14} color="var(--coral)" /> Volunteer Resources
+              </h3>
+              <p style={{ fontSize: '0.78rem', color: 'rgba(26,54,93,0.5)', marginBottom: '0.9rem', lineHeight: 1.5 }}>
+                Tips, repertoire ideas, and event prep guidelines.
+              </p>
+              <Link href="/resources" className="btn-ghost w-full py-2 text-sm flex items-center justify-center gap-1.5" style={{ textDecoration: 'none' }}>
+                View Handbook
+              </Link>
             </div>
 
             {/* Update instrument */}

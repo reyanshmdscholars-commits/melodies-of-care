@@ -154,7 +154,12 @@ export default function LoginPage() {
               </button>
             </form>
 
-            <p style={{ textAlign: 'center', marginTop: '1.5rem', fontSize: '0.88rem', color: 'rgba(26,54,93,0.5)' }}>
+            <p style={{ textAlign: 'center', marginTop: '1.25rem', fontSize: '0.82rem' }}>
+              <Link href="/forgot-password" style={{ color: 'rgba(26,54,93,0.45)', fontWeight: 500, textDecoration: 'none' }}>
+                Forgot your password?
+              </Link>
+            </p>
+            <p style={{ textAlign: 'center', marginTop: '0.75rem', fontSize: '0.88rem', color: 'rgba(26,54,93,0.5)' }}>
               Don&apos;t have an account?{' '}
               <Link href="/signup" style={{ color: 'var(--coral)', fontWeight: 600, textDecoration: 'none' }}>
                 Sign up as a volunteer

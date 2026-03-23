@@ -438,6 +438,10 @@ export default function AdminDashboard() {
   const [deletingAnnId, setDeletingAnnId] = useState<string | null>(null)
   const [deletingInquiryId, setDeletingInquiryId] = useState<string | null>(null)
   const [deletingVolunteerId, setDeletingVolunteerId] = useState<string | null>(null)
+  const [rejectingId, setRejectingId] = useState<string | null>(null)
+  const [tempPwModalId, setTempPwModalId] = useState<string | null>(null)
+  const [tempPwInput, setTempPwInput] = useState('')
+  const [settingTempPw, setSettingTempPw] = useState(false)
 
   useEffect(() => {
     if (!isAdmin) { router.push('/'); return }
@@ -500,7 +504,7 @@ export default function AdminDashboard() {
   // ── Volunteer toggle ───────────────────────────────────────
   const toggleVolunteerStatus = async (v: Volunteer) => {
     setTogglingId(v.id)
-    const newStatus = v.status === 'pending' ? 'approved' : 'pending'
+    const newStatus = v.status === 'pending' ? 'approved' : 'pending' as 'pending' | 'approved' | 'rejected'
     await supabase.from('volunteers').update({ status: newStatus }).eq('id', v.id)
     setVolunteers(prev => prev.map(vol => vol.id === v.id ? { ...vol, status: newStatus } : vol))
     // Open pre-filled welcome email when approving
@@ -521,6 +525,32 @@ export default function AdminDashboard() {
     await supabase.from('volunteers').delete().eq('id', v.id)
     setVolunteers(prev => prev.filter(vol => vol.id !== v.id))
     setDeletingVolunteerId(null)
+  }
+
+  // ── Reject volunteer ───────────────────────────────────────
+  const rejectVolunteer = async (v: Volunteer) => {
+    setRejectingId(v.id)
+    await supabase.from('volunteers').update({ status: 'rejected' }).eq('id', v.id)
+    setVolunteers(prev => prev.map(vol => vol.id === v.id ? { ...vol, status: 'rejected' } : vol))
+    const subject = encodeURIComponent('Your Melodies of Care Application')
+    const body = encodeURIComponent(
+      `Hi ${v.name.split(' ')[0]},\n\nThank you for applying to volunteer with Melodies of Care. After reviewing your application, we're unable to move forward at this time.\n\nWe truly appreciate your interest in our mission, and we encourage you to stay connected.\n\nWarm regards,\nThe Melodies of Care Team`
+    )
+    window.open(`mailto:${v.email}?subject=${subject}&body=${body}`, '_blank')
+    setRejectingId(null)
+  }
+
+  // ── Set temp password ───────────────────────────────────────
+  const setVolunteerTempPassword = async (v: Volunteer) => {
+    if (!tempPwInput.trim() || tempPwInput.length < 6) return
+    setSettingTempPw(true)
+    const { hashPassword } = await import('@/lib/supabase')
+    const hash = await hashPassword(tempPwInput.trim())
+    await supabase.from('volunteers').update({ password_hash: hash }).eq('id', v.id)
+    setTempPwModalId(null)
+    setTempPwInput('')
+    setSettingTempPw(false)
+    alert(`Password updated for ${v.name}. Let them know their new password: ${tempPwInput}`)
   }
 
   // ── Delete facility inquiry ─────────────────────────────────
@@ -835,15 +865,20 @@ export default function AdminDashboard() {
               <div>
                 <div className="flex items-center justify-between mb-4">
                   <h2 style={{ fontWeight: 700, fontSize: '1.05rem' }}>Volunteers ({volunteers.length})</h2>
-                  <div className="flex gap-2 text-sm">
+                  <div className="flex gap-2 text-sm flex-wrap">
                     <span className="badge-pending">{volunteers.filter(v => v.status === 'pending').length} Pending</span>
                     <span className="badge-approved">{volunteers.filter(v => v.status === 'approved').length} Approved</span>
+                    {volunteers.filter(v => v.status === 'rejected').length > 0 && (
+                      <span style={{ fontSize: '0.72rem', fontWeight: 700, color: '#c03030', background: 'rgba(220,60,60,0.1)', padding: '2px 9px', borderRadius: '100px', border: '1px solid rgba(220,60,60,0.25)' }}>
+                        {volunteers.filter(v => v.status === 'rejected').length} Rejected
+                      </span>
+                    )}
                   </div>
                 </div>
                 <div className="glass-card" style={{ overflow: 'clip' }}>
                   <div className="table-scroll">
                   <table className="glass-table">
-                    <thead><tr><th>Name</th><th>Email</th><th>Instrument</th><th>Hours</th><th>Media ✓</th><th>Status</th><th>Toggle</th><th>Delete</th></tr></thead>
+                    <thead><tr><th>Name</th><th>Email</th><th>Instrument</th><th>Hours</th><th>Events</th><th>Media ✓</th><th>Status</th><th>Actions</th><th>Delete</th></tr></thead>
                     <tbody>
                       {volunteers.map(v => (
                         <tr key={v.id}>
@@ -867,19 +902,77 @@ export default function AdminDashboard() {
                               >+</button>
                             </div>
                           </td>
+                          <td style={{ fontSize: '0.85rem', fontWeight: 600, color: 'var(--navy)' }}>
+                            {signups.filter(s => s.volunteer_id === v.id).length}
+                          </td>
                           <td>
                             {v.media_consent
                               ? <span style={{ fontSize: '0.75rem', fontWeight: 700, color: '#1a6a40', background: 'rgba(100,200,150,0.15)', padding: '2px 8px', borderRadius: '100px' }}>✓ Yes</span>
                               : <span style={{ fontSize: '0.75rem', color: 'rgba(26,54,93,0.3)' }}>—</span>
                             }
                           </td>
-                          <td><span className={v.status === 'approved' ? 'badge-approved' : 'badge-pending'}>{v.status}</span></td>
                           <td>
-                            <button onClick={() => toggleVolunteerStatus(v)} disabled={togglingId === v.id}
-                              className="flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold transition-all"
-                              style={{ background: v.status === 'pending' ? 'rgba(100,200,150,0.15)' : 'rgba(255,200,100,0.15)', color: v.status === 'pending' ? '#1a6a40' : '#8a6200', border: v.status === 'pending' ? '1px solid rgba(100,200,150,0.3)' : '1px solid rgba(255,200,100,0.35)' }}>
-                              {togglingId === v.id ? <Loader2 size={11} style={{ animation: 'spin 1s linear infinite' }} /> : v.status === 'pending' ? <><Check size={11} /> Approve</> : <><ChevronDown size={11} /> Revert</>}
-                            </button>
+                            {v.status === 'approved'
+                              ? <span className="badge-approved">approved</span>
+                              : v.status === 'rejected'
+                              ? <span style={{ fontSize: '0.72rem', fontWeight: 700, color: '#c03030', background: 'rgba(220,60,60,0.1)', padding: '2px 9px', borderRadius: '100px', border: '1px solid rgba(220,60,60,0.25)' }}>rejected</span>
+                              : <span className="badge-pending">pending</span>
+                            }
+                          </td>
+                          <td>
+                            <div style={{ display: 'flex', flexDirection: 'column', gap: 4 }}>
+                              {/* Approve / Revert / Re-admit */}
+                              {v.status !== 'rejected' && (
+                                <button onClick={() => toggleVolunteerStatus(v)} disabled={togglingId === v.id}
+                                  className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold transition-all"
+                                  style={{ background: v.status === 'pending' ? 'rgba(100,200,150,0.15)' : 'rgba(255,200,100,0.15)', color: v.status === 'pending' ? '#1a6a40' : '#8a6200', border: v.status === 'pending' ? '1px solid rgba(100,200,150,0.3)' : '1px solid rgba(255,200,100,0.35)' }}>
+                                  {togglingId === v.id ? <Loader2 size={11} style={{ animation: 'spin 1s linear infinite' }} /> : v.status === 'pending' ? <><Check size={11} /> Approve</> : <><ChevronDown size={11} /> Revert</>}
+                                </button>
+                              )}
+                              {v.status === 'rejected' && (
+                                <button onClick={() => toggleVolunteerStatus(v)} disabled={togglingId === v.id}
+                                  className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold"
+                                  style={{ background: 'rgba(255,200,100,0.15)', color: '#8a6200', border: '1px solid rgba(255,200,100,0.35)' }}>
+                                  {togglingId === v.id ? <Loader2 size={11} style={{ animation: 'spin 1s linear infinite' }} /> : 'Re-admit'}
+                                </button>
+                              )}
+                              {/* Reject — only for non-rejected */}
+                              {v.status !== 'rejected' && (
+                                <button onClick={() => rejectVolunteer(v)} disabled={rejectingId === v.id}
+                                  className="flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold"
+                                  style={{ background: 'rgba(220,60,60,0.08)', color: '#c03030', border: '1px solid rgba(220,60,60,0.22)' }}>
+                                  {rejectingId === v.id ? <Loader2 size={11} style={{ animation: 'spin 1s linear infinite' }} /> : 'Reject'}
+                                </button>
+                              )}
+                              {/* Set Temp Password */}
+                              {tempPwModalId === v.id ? (
+                                <div style={{ display: 'flex', gap: 4, alignItems: 'center' }}>
+                                  <input
+                                    className="glass-input"
+                                    style={{ fontSize: '0.75rem', padding: '3px 8px', minWidth: 0, width: 90 }}
+                                    placeholder="New password"
+                                    value={tempPwInput}
+                                    onChange={e => setTempPwInput(e.target.value)}
+                                    onKeyDown={e => e.key === 'Enter' && setVolunteerTempPassword(v)}
+                                    autoFocus
+                                  />
+                                  <button onClick={() => setVolunteerTempPassword(v)} disabled={settingTempPw || tempPwInput.length < 6}
+                                    style={{ width: 22, height: 22, borderRadius: '50%', border: '1.5px solid rgba(30,160,80,0.4)', background: 'rgba(30,160,80,0.1)', color: '#1a6a30', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: tempPwInput.length < 6 ? 0.4 : 1 }}>
+                                    {settingTempPw ? <Loader2 size={10} style={{ animation: 'spin 1s linear infinite' }} /> : <Check size={10} />}
+                                  </button>
+                                  <button onClick={() => { setTempPwModalId(null); setTempPwInput('') }}
+                                    style={{ width: 22, height: 22, borderRadius: '50%', border: '1.5px solid rgba(26,54,93,0.15)', background: 'rgba(26,54,93,0.05)', color: 'rgba(26,54,93,0.5)', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                                    <X size={10} />
+                                  </button>
+                                </div>
+                              ) : (
+                                <button onClick={() => { setTempPwModalId(v.id); setTempPwInput('') }}
+                                  className="flex items-center gap-1 px-3 py-1 rounded-full text-xs font-semibold"
+                                  style={{ background: 'rgba(26,54,93,0.06)', color: 'rgba(26,54,93,0.55)', border: '1px solid rgba(26,54,93,0.12)' }}>
+                                  Set Temp Pw
+                                </button>
+                              )}
+                            </div>
                           </td>
                           <td>
                             <button
@@ -893,7 +986,7 @@ export default function AdminDashboard() {
                           </td>
                         </tr>
                       ))}
-                      {volunteers.length === 0 && <tr><td colSpan={8} style={{ textAlign: 'center', color: 'rgba(26,54,93,0.4)', padding: '2rem' }}>No volunteers yet.</td></tr>}
+                      {volunteers.length === 0 && <tr><td colSpan={9} style={{ textAlign: 'center', color: 'rgba(26,54,93,0.4)', padding: '2rem' }}>No volunteers yet.</td></tr>}
                     </tbody>
                   </table>
                   </div>
