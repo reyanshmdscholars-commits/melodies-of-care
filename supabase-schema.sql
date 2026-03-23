@@ -256,13 +256,13 @@ create table if not exists public.password_resets (
   created_at timestamptz not null default now()
 );
 create index if not exists idx_password_resets_token on public.password_resets (token);
--- Public insert so the API route can create tokens
-create policy "Allow insert password resets" on public.password_resets for insert with check (true);
--- Public select so the reset page can validate the token
-create policy "Allow select password resets" on public.password_resets for select using (true);
--- Public update so the reset page can mark the token used
-create policy "Allow update password resets" on public.password_resets for update using (true);
 alter table public.password_resets enable row level security;
+drop policy if exists "Allow insert password resets" on public.password_resets;
+drop policy if exists "Allow select password resets" on public.password_resets;
+drop policy if exists "Allow update password resets" on public.password_resets;
+create policy "Allow insert password resets" on public.password_resets for insert with check (true);
+create policy "Allow select password resets" on public.password_resets for select using (true);
+create policy "Allow update password resets" on public.password_resets for update using (true);
 
 -- ── 8. SEED DATA ─────────────────────────────────────────────
 insert into public.events (facility_name, date, time, status)
