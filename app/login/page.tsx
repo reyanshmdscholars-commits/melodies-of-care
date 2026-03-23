@@ -99,7 +99,7 @@ export default function LoginPage() {
           </div>
         ) : (
           <div className="glass-card p-8">
-            <div className="flex flex-col gap-4">
+            <form onSubmit={e => { e.preventDefault(); handleLogin() }} className="flex flex-col gap-4">
               <div>
                 <label style={{ display: 'block', fontSize: '0.82rem', fontWeight: 600, color: 'rgba(26,54,93,0.7)', marginBottom: '6px' }}>
                   Email Address
@@ -107,10 +107,11 @@ export default function LoginPage() {
                 <input
                   className="glass-input"
                   type="email"
+                  name="email"
+                  autoComplete="email"
                   placeholder="jane@example.com"
                   value={email}
                   onChange={e => { setEmail(e.target.value); setError('') }}
-                  onKeyDown={e => e.key === 'Enter' && handleLogin()}
                   autoFocus
                 />
               </div>
@@ -123,10 +124,11 @@ export default function LoginPage() {
                   <input
                     className="glass-input pr-12"
                     type={showPw ? 'text' : 'password'}
+                    name="password"
+                    autoComplete="current-password"
                     placeholder="Your password"
                     value={password}
                     onChange={e => { setPassword(e.target.value); setError('') }}
-                    onKeyDown={e => e.key === 'Enter' && handleLogin()}
                   />
                   <button type="button" onClick={() => setShowPw(!showPw)}
                     className="absolute right-3 top-1/2 -translate-y-1/2"
@@ -143,14 +145,14 @@ export default function LoginPage() {
               )}
 
               <button
-                onClick={handleLogin}
+                type="submit"
                 disabled={loading}
                 className="btn-coral w-full py-3 text-base flex items-center justify-center gap-2"
                 style={{ opacity: loading ? 0.7 : 1, marginTop: '0.25rem' }}
               >
                 {loading ? 'Checking…' : <><LogIn size={16} /> Log In</>}
               </button>
-            </div>
+            </form>
 
             <p style={{ textAlign: 'center', marginTop: '1.5rem', fontSize: '0.88rem', color: 'rgba(26,54,93,0.5)' }}>
               Don&apos;t have an account?{' '}

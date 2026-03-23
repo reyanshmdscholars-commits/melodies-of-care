@@ -436,6 +436,8 @@ export default function AdminDashboard() {
   const [postingAnn, setPostingAnn] = useState(false)
   const [togglingAnnId, setTogglingAnnId] = useState<string | null>(null)
   const [deletingAnnId, setDeletingAnnId] = useState<string | null>(null)
+  const [deletingInquiryId, setDeletingInquiryId] = useState<string | null>(null)
+  const [deletingVolunteerId, setDeletingVolunteerId] = useState<string | null>(null)
 
   useEffect(() => {
     if (!isAdmin) { router.push('/'); return }
@@ -510,6 +512,24 @@ export default function AdminDashboard() {
       window.open(`mailto:${v.email}?subject=${subject}&body=${body}`, '_blank')
     }
     setTogglingId(null)
+  }
+
+  // ── Delete volunteer ───────────────────────────────────────
+  const deleteVolunteer = async (v: Volunteer) => {
+    if (!confirm(`Permanently delete ${v.name}? This cannot be undone.`)) return
+    setDeletingVolunteerId(v.id)
+    await supabase.from('volunteers').delete().eq('id', v.id)
+    setVolunteers(prev => prev.filter(vol => vol.id !== v.id))
+    setDeletingVolunteerId(null)
+  }
+
+  // ── Delete facility inquiry ─────────────────────────────────
+  const deleteInquiry = async (id: string, name: string) => {
+    if (!confirm(`Delete inquiry from ${name}? This cannot be undone.`)) return
+    setDeletingInquiryId(id)
+    await supabase.from('facility_inquiries').delete().eq('id', id)
+    setInquiries(prev => prev.filter(inq => inq.id !== id))
+    setDeletingInquiryId(null)
   }
 
   // ── Adjust volunteer hours ──────────────────────────────────
@@ -823,7 +843,7 @@ export default function AdminDashboard() {
                 <div className="glass-card" style={{ overflow: 'clip' }}>
                   <div className="table-scroll">
                   <table className="glass-table">
-                    <thead><tr><th>Name</th><th>Email</th><th>Instrument</th><th>Hours</th><th>Media ✓</th><th>Status</th><th>Toggle</th></tr></thead>
+                    <thead><tr><th>Name</th><th>Email</th><th>Instrument</th><th>Hours</th><th>Media ✓</th><th>Status</th><th>Toggle</th><th>Delete</th></tr></thead>
                     <tbody>
                       {volunteers.map(v => (
                         <tr key={v.id}>
@@ -861,9 +881,19 @@ export default function AdminDashboard() {
                               {togglingId === v.id ? <Loader2 size={11} style={{ animation: 'spin 1s linear infinite' }} /> : v.status === 'pending' ? <><Check size={11} /> Approve</> : <><ChevronDown size={11} /> Revert</>}
                             </button>
                           </td>
+                          <td>
+                            <button
+                              onClick={() => deleteVolunteer(v)}
+                              disabled={deletingVolunteerId === v.id}
+                              title="Delete volunteer"
+                              style={{ width: 28, height: 28, borderRadius: '50%', border: '1.5px solid rgba(220,60,60,0.35)', background: 'rgba(220,60,60,0.07)', color: '#c03030', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', opacity: deletingVolunteerId === v.id ? 0.4 : 1, transition: 'all 0.15s' }}
+                            >
+                              {deletingVolunteerId === v.id ? <Loader2 size={12} style={{ animation: 'spin 1s linear infinite' }} /> : <Trash2 size={12} />}
+                            </button>
+                          </td>
                         </tr>
                       ))}
-                      {volunteers.length === 0 && <tr><td colSpan={7} style={{ textAlign: 'center', color: 'rgba(26,54,93,0.4)', padding: '2rem' }}>No volunteers yet.</td></tr>}
+                      {volunteers.length === 0 && <tr><td colSpan={8} style={{ textAlign: 'center', color: 'rgba(26,54,93,0.4)', padding: '2rem' }}>No volunteers yet.</td></tr>}
                     </tbody>
                   </table>
                   </div>
@@ -1085,13 +1115,23 @@ export default function AdminDashboard() {
                               {new Date(inq.created_at).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric', hour: 'numeric', minute: '2-digit' })}
                             </p>
                           </div>
-                          <a
-                            href={`mailto:${inq.email}`}
-                            className="flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold"
-                            style={{ background: 'rgba(240,147,91,0.12)', color: 'var(--coral)', border: '1px solid rgba(240,147,91,0.25)', textDecoration: 'none', flexShrink: 0 }}
-                          >
-                            <Mail size={11} /> Reply
-                          </a>
+                          <div className="flex items-center gap-2" style={{ flexShrink: 0 }}>
+                            <a
+                              href={`mailto:${inq.email}?subject=${encodeURIComponent(`Re: Partnership Inquiry — ${inq.facility_name}`)}&body=${encodeURIComponent(`Hi ${inq.contact_name.split(' ')[0]},\n\nThank you for reaching out about hosting Melodies of Care at ${inq.facility_name}! We'd love to discuss bringing live music to your residents.\n\n`)}`}
+                              className="flex items-center gap-1.5 px-4 py-1.5 rounded-full text-xs font-semibold"
+                              style={{ background: 'rgba(240,147,91,0.12)', color: 'var(--coral)', border: '1px solid rgba(240,147,91,0.25)', textDecoration: 'none' }}
+                            >
+                              <Mail size={11} /> Reply
+                            </a>
+                            <button
+                              onClick={() => deleteInquiry(inq.id, inq.facility_name)}
+                              disabled={deletingInquiryId === inq.id}
+                              className="flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-semibold"
+                              style={{ background: 'rgba(220,60,60,0.08)', color: '#c03030', border: '1px solid rgba(220,60,60,0.2)', cursor: 'pointer', opacity: deletingInquiryId === inq.id ? 0.5 : 1 }}
+                            >
+                              {deletingInquiryId === inq.id ? <Loader2 size={11} style={{ animation: 'spin 1s linear infinite' }} /> : <Trash2 size={11} />}
+                            </button>
+                          </div>
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-3 mb-3">
                           <div style={{ display: 'flex', alignItems: 'center', gap: 7 }}>
