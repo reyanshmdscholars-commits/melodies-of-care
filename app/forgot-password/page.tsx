@@ -3,16 +3,12 @@ import { useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { Mail, ArrowLeft, Check, Loader2 } from 'lucide-react'
-import { supabase } from '@/lib/supabase'
-
-const FORMSPREE_ID = 'xgonzkoe'
-const ADMIN_EMAIL  = 'reyansh.melodiesofcare@gmail.com'
 
 export default function ForgotPasswordPage() {
-  const [email, setEmail]   = useState('')
+  const [email, setEmail]     = useState('')
   const [loading, setLoading] = useState(false)
-  const [error, setError]   = useState('')
-  const [done, setDone]     = useState(false)
+  const [error, setError]     = useState('')
+  const [done, setDone]       = useState(false)
 
   const handleSubmit = async () => {
     if (!email.trim()) { setError('Please enter your email address.'); return }
@@ -21,35 +17,12 @@ export default function ForgotPasswordPage() {
     setError('')
 
     try {
-      // Check if the email exists in our volunteers table
-      const { data: volunteers } = await supabase
-        .from('volunteers')
-        .select('name, email')
-        .eq('email', email.toLowerCase().trim())
-        .limit(1)
-
-      if (!volunteers || volunteers.length === 0) {
-        setError('No account found with that email address.')
-        setLoading(false)
-        return
-      }
-
-      const vol = volunteers[0]
-
-      // Notify admin via Formspree
-      await fetch(`https://formspree.io/f/${FORMSPREE_ID}`, {
+      const res = await fetch('/api/request-reset', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          type:           'Password Reset Request',
-          _subject:       `Password Reset Request — ${vol.name}`,
-          volunteer_name: vol.name,
-          volunteer_email: vol.email,
-          message:        `${vol.name} (${vol.email}) has requested a password reset. Please log into the admin panel to set a temporary password for them, then notify them at ${vol.email}.`,
-          _replyto:       ADMIN_EMAIL,
-        }),
-      }).catch(() => {})
-
+        body: JSON.stringify({ email: email.toLowerCase().trim() }),
+      })
+      if (!res.ok) throw new Error('Request failed')
       setDone(true)
     } catch {
       setError('Something went wrong. Please try again.')
@@ -70,7 +43,7 @@ export default function ForgotPasswordPage() {
             Forgot Password?
           </h1>
           <p style={{ color: 'rgba(26,54,93,0.55)', fontSize: '0.95rem', maxWidth: 320, margin: '0 auto' }}>
-            Enter your email and we&apos;ll notify an admin to reset your password.
+            Enter your email and we&apos;ll send you a link to reset your password.
           </p>
         </div>
 
@@ -80,9 +53,9 @@ export default function ForgotPasswordPage() {
               style={{ background: 'rgba(178,216,216,0.25)', border: '1px solid rgba(178,216,216,0.5)' }}>
               <Check size={28} color="#2d6a6a" />
             </div>
-            <h3 style={{ fontWeight: 700, fontSize: '1.1rem', marginBottom: '0.75rem' }}>Request Sent!</h3>
+            <h3 style={{ fontWeight: 700, fontSize: '1.1rem', marginBottom: '0.75rem' }}>Check your inbox!</h3>
             <p style={{ color: 'rgba(26,54,93,0.6)', fontSize: '0.9rem', lineHeight: 1.75, marginBottom: '1.75rem' }}>
-              Our admin has been notified. They&apos;ll set a temporary password and reach out to you at <strong>{email}</strong> shortly.
+              If an account exists for <strong>{email}</strong>, you&apos;ll receive a password reset link shortly. The link expires in 1 hour.
             </p>
             <Link href="/login" className="btn-coral px-7 py-2.5 text-sm" style={{ textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 6 }}>
               Back to Login
@@ -121,14 +94,14 @@ export default function ForgotPasswordPage() {
                 style={{ opacity: loading ? 0.7 : 1, marginTop: '0.25rem' }}
               >
                 {loading
-                  ? <><Loader2 size={16} style={{ animation: 'spin 1s linear infinite' }} /> Sending request…</>
-                  : 'Send Reset Request'
+                  ? <><Loader2 size={16} style={{ animation: 'spin 1s linear infinite' }} /> Sending…</>
+                  : 'Send Reset Link'
                 }
               </button>
             </div>
 
-            <p style={{ textAlign: 'center', marginTop: '1.5rem', fontSize: '0.88rem', color: 'rgba(26,54,93,0.5)' }}>
-              <Link href="/login" style={{ color: 'var(--coral)', fontWeight: 600, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 4 }}>
+            <p style={{ textAlign: 'center', marginTop: '1.5rem', fontSize: '0.88rem' }}>
+              <Link href="/login" style={{ color: 'rgba(26,54,93,0.45)', fontWeight: 500, textDecoration: 'none', display: 'inline-flex', alignItems: 'center', gap: 4 }}>
                 <ArrowLeft size={12} /> Back to Login
               </Link>
             </p>

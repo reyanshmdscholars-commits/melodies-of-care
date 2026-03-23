@@ -243,7 +243,26 @@ language sql security definer as $$
   from public.event_signups group by event_id;
 $$;
 
--- ── 7. SEED DATA ─────────────────────────────────────────────
+-- ── 7. PASSWORD RESETS TABLE ─────────────────────────────────
+-- Run this in the Supabase SQL editor to enable self-service password reset.
+create table if not exists public.password_resets (
+  id         uuid        primary key default gen_random_uuid(),
+  email      text        not null,
+  token      text        not null unique,
+  expires_at timestamptz not null,
+  used       boolean     not null default false,
+  created_at timestamptz not null default now()
+);
+create index if not exists idx_password_resets_token on public.password_resets (token);
+-- Public insert so the API route can create tokens
+create policy "Allow insert password resets" on public.password_resets for insert with check (true);
+-- Public select so the reset page can validate the token
+create policy "Allow select password resets" on public.password_resets for select using (true);
+-- Public update so the reset page can mark the token used
+create policy "Allow update password resets" on public.password_resets for update using (true);
+alter table public.password_resets enable row level security;
+
+-- ── 8. SEED DATA ─────────────────────────────────────────────
 insert into public.events (facility_name, date, time, status)
 values
   ('Sunrise Manor',              current_date + 3,  '14:00', 'open'),
