@@ -522,8 +522,12 @@ export default function AdminDashboard() {
   const deleteVolunteer = async (v: Volunteer) => {
     if (!confirm(`Permanently delete ${v.name}? This cannot be undone.`)) return
     setDeletingVolunteerId(v.id)
-    await supabase.from('volunteers').delete().eq('id', v.id)
-    setVolunteers(prev => prev.filter(vol => vol.id !== v.id))
+    const { error } = await supabase.from('volunteers').delete().eq('id', v.id)
+    if (error) {
+      alert(`Failed to delete ${v.name}: ${error.message}`)
+    } else {
+      setVolunteers(prev => prev.filter(vol => vol.id !== v.id))
+    }
     setDeletingVolunteerId(null)
   }
 

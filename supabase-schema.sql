@@ -75,9 +75,11 @@ create policy "Public can delete events"  on public.events for delete using (tru
 drop policy if exists "Public can insert volunteers" on public.volunteers;
 drop policy if exists "Public can read volunteers"   on public.volunteers;
 drop policy if exists "Public can update volunteers" on public.volunteers;
+drop policy if exists "Public can delete volunteers" on public.volunteers;
 create policy "Public can insert volunteers" on public.volunteers for insert with check (true);
 create policy "Public can read volunteers"   on public.volunteers for select using (true);
 create policy "Public can update volunteers" on public.volunteers for update using (true);
+create policy "Public can delete volunteers" on public.volunteers for delete using (true);
 
 drop policy if exists "Public can read signups"   on public.event_signups;
 drop policy if exists "Public can insert signups" on public.event_signups;
